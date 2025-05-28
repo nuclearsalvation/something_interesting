@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Search </title>
+    </head>
+    <body>
+        <form action="{% url 'app_zero:sin' %}" method="get">
+            <input name="a" type="number" step="0.001" placeholder="Left boundary">
+            <input name="b" type="number" step="0.001" placeholder="Right boundary">
+            <input name="dx" type="number" step="0.001" placeholder="Step">
+            <input name="w" type="number" step="0.001" placeholder="Frequency">
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
