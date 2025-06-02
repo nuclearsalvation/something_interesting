@@ -8,6 +8,9 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import io
 import urllib, base64
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .serializers import ZeroSerializer
 # Create your views here.
 
 
@@ -93,3 +96,12 @@ class ZeroListStringView(TemplateView):
         context = super().get_context_data(**kwargs)
         context['obj_list'] = ZeroStringModel.objects.all()
         return context
+    
+class ZeroAPIView(APIView):
+    def get(self, request):
+        queryset = ZeroStringModel.objects.all()
+        zero_serializer = ZeroSerializer(
+            instance = queryset,
+            many = True
+        )
+        return Response(zero_serializer.data)
