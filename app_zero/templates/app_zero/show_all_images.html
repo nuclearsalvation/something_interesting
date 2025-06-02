@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>1</title>
+    </head>
+    <body>
+        <h1>Notes</h1>
+        {% for obj in obj_list %}
+        <div><img src="data:image/png;base64,{{ obj.source }}"></div>
+        {% endfor %}
+    </body>
+</html>
