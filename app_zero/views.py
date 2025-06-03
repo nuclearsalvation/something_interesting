@@ -105,3 +105,11 @@ class ZeroAPIView(APIView):
             many = True
         )
         return Response(zero_serializer.data)
+    
+class ZeroAPIViewOne(APIView):
+    def get(self, request, pk):
+        queryset = ZeroStringModel.objects.get(pk=pk)
+        zero_serializer = ZeroSerializer(
+            instance = queryset
+        )
+        return Response(zero_serializer.data)
