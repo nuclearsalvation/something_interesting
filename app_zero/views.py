@@ -3,7 +3,7 @@ from django.http import HttpRequest
 from django.views.generic import CreateView, TemplateView
 from .models import ZeroModel, ZeroImageModel, ZeroStringModel
 from .forms import ZeroSubmitForm
-from .figures import sin_figure
+from .figures import sin_figure, response_figure
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import io
@@ -58,7 +58,26 @@ class ZeroShowView(TemplateView):
         #img = ZeroImageModel.objects.create()
         #img.img.filename = 'data:image/png;base64,{uri}'
         return context
-    
+
+class ZeroResponseView(TemplateView):
+    template_name = 'app_zero/show_sin'
+    def get_context_data(self, **kwargs):
+        fin = self.request.GET.get('fin')
+        a = self.request.GET.get('a')
+        b = self.request.GET.get('b')
+        c = self.request.GET.get('c')
+        dx = self.request.GET.get('dx')
+        context = super().get_context_data(**kwargs)
+        fig = response_figure(fin=int(fin),a=float(a),b=float(b),c=float(c),dx=float(dx))
+        buf = io.BytesIO()
+        fig.savefig(buf,format='png')
+        buf.seek(0)
+        string = base64.b64encode(buf.read())
+        uri =  urllib.parse.quote(string)
+        context['test'] = uri             
+        return context
+
+
 class ZeroFromBaseShowView(TemplateView):
     def get(self, request: HttpRequest, pk: int):
         obj = get_object_or_404(ZeroModel, pk=pk)

@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import ZeroSubmitView, ZeroShowView, ZeroFromBaseShowView, ZeroCreateView,  ZeroImageView, ZeroListStringView, ZeroAPIView, ZeroAPIViewOne
-
+from .views import ZeroSubmitView, ZeroShowView, ZeroFromBaseShowView, ZeroCreateView,  ZeroImageView, ZeroListStringView, ZeroAPIView, ZeroAPIViewOne, ZeroResponseView
 
 app_name='app_zero'
 
@@ -12,7 +11,8 @@ urlpatterns=[
     path('show_image/<pk>', ZeroImageView.as_view(template_name='app_zero/show_image.html'), name='show_image'),
     path('show_all', ZeroListStringView.as_view(template_name='app_zero/show_all_images.html'), name='show_all'),
     path('serialized', ZeroAPIView.as_view()),
-    path('serialized/<pk>',ZeroAPIViewOne.as_view())
+    path('serialized/<pk>',ZeroAPIViewOne.as_view()),
+    path('response', ZeroResponseView.as_view(template_name='app_zero/show_sin.html'), name='response')
 
 
 ]
