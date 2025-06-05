@@ -6,7 +6,7 @@ from .forms import ZeroSubmitForm
 from .figures import sin_figure, response_figure
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
-import io
+import io, csv
 import urllib, base64
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -146,7 +146,14 @@ class ZeroNameNumCreateView(TemplateView):
 
 class ZeroLoadFromCSVView(TemplateView):
     template_name='app_zero/show_name_num_set.html'
+        
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['name_num_list'] = [['ac', 0],['dc', 1]]
+        loading_list = []
+        with open('uploads/table.csv','r', encoding='utf-8') as loading_file:
+            csv_reader = csv.reader(loading_file)
+            next(csv_reader, None)
+            for row in csv_reader:
+                loading_list.append(row)
+        context['name_num_list'] = loading_list
         return context
