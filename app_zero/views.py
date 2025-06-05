@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest
 from django.views.generic import CreateView, TemplateView
-from .models import ZeroModel, ZeroImageModel, ZeroStringModel
+from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel
 from .forms import ZeroSubmitForm
 from .figures import sin_figure, response_figure
 from matplotlib.figure import Figure
@@ -132,3 +132,21 @@ class ZeroAPIViewOne(APIView):
             instance = queryset
         )
         return Response(zero_serializer.data)
+    
+class ZeroNameNumCreateView(TemplateView):
+    template_name = 'app_zero/show_name_num.html'
+    def get_context_data(self, **kwargs):
+        name = self.request.GET.get('name')
+        num = self.request.GET.get('num')
+        context = super().get_context_data(**kwargs)
+        context['name'] = name
+        context['num'] = float(num)*1.85             
+        #context['name'] = [name, num]
+        return context
+
+class ZeroLoadFromCSVView(TemplateView):
+    template_name='app_zero/show_name_num_set.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name_num_list'] = [['ac', 0],['dc', 1]]
+        return context

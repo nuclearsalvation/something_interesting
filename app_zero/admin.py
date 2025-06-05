@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import ZeroModel, ZeroImageModel
+from .models import ZeroModel, ZeroImageModel, ZeroCSVModel
 
 # Register your models here.
 class ZeroModelAdmin(admin.ModelAdmin):
@@ -7,3 +7,4 @@ class ZeroModelAdmin(admin.ModelAdmin):
 
 admin.site.register(ZeroModel)
 admin.site.register(ZeroImageModel)
+admin.site.register(ZeroCSVModel)

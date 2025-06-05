@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Create product </title>
+    </head>
+    <body>
+        {% load static %}
+        {% for name_num in name_num_list %}
+        <p>{{name_num.0}}, {{name_num.1}}</p>
+        {% endfor %}
+    </body>
+</html>

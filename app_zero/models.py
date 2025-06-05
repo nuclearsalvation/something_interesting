@@ -11,3 +11,10 @@ class ZeroImageModel(models.Model):
 
 class ZeroStringModel(models.Model):
     source = models.TextField()
+
+class ZeroCSVModel(models.Model):
+    file = models.FileField()
+
+class ZeroNameNumModel(models.Model):
+    name = models.TextField()
+    num = models.FloatField()
