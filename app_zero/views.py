@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest
 from django.views.generic import CreateView, TemplateView
-from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel
+from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel
 from .forms import ZeroSubmitForm
 from .figures import sin_figure, response_figure
 from matplotlib.figure import Figure
@@ -157,3 +157,7 @@ class ZeroLoadFromCSVView(TemplateView):
                 loading_list.append(row)
         context['name_num_list'] = loading_list
         return context
+    
+class ZeroCSVCreateView(CreateView):
+    model = ZeroCSVModel
+    template_name = 'app_zero/tmplt.html'
