@@ -10,7 +10,7 @@ import io, csv
 import urllib, base64
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import ZeroSerializer
+from .serializers import ZeroSerializer, ZeroResponseSerializer
 # Create your views here.
 
 
@@ -161,3 +161,17 @@ class ZeroLoadFromCSVView(TemplateView):
 class ZeroCSVCreateView(CreateView):
     model = ZeroCSVModel
     template_name = 'app_zero/tmplt.html'
+
+class ZeroResponseSubmitView(TemplateView):
+    template_name ='app_zero/input_response.html'
+
+class ZeroResponseAPIView(APIView):
+    def get(self, request):
+            fin = self.request.GET.get('fin')
+            a = self.request.GET.get('a')
+            b = self.request.GET.get('b')
+            c = self.request.GET.get('c')
+            dx = self.request.GET.get('dx')
+            serializer = ZeroResponseSerializer(
+            )
+            return Response(serializer.data)

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Search </title>
+    </head>
+    <body>
+        <form action="{% url 'app_zero:response' %}" method="get">
+            <input name="a" type="number" step="0.001" placeholder="Inertia">
+            <input name="b" type="number" step="0.001" placeholder="Viscosity">
+            <input name="c" type="number" step="0.001" placeholder="Stifness">
+            <input name="dx" type="number" step="0.001" placeholder="Step">
+            <input name="fin" type="number" step="0.001" placeholder="End">
+            <button type="submit">Submit</button>
+        </form>
+    </body>
+</html>
