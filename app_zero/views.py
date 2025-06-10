@@ -167,11 +167,19 @@ class ZeroResponseSubmitView(TemplateView):
 
 class ZeroResponseAPIView(APIView):
     def get(self, request):
+            class LocalClass:
+                def __init__(self, fin, a, b, c, dx, created=None):
+                    self.fin = fin
+                    self.a = a
+                    self.b = b 
+                    self.c = c
+                    self.dx = dx
+
             fin = self.request.GET.get('fin')
             a = self.request.GET.get('a')
             b = self.request.GET.get('b')
             c = self.request.GET.get('c')
             dx = self.request.GET.get('dx')
-            serializer = ZeroResponseSerializer(
-            )
+            srlz = LocalClass(fin,a,b,c,dx)
+            serializer = ZeroResponseSerializer(srlz)
             return Response(serializer.data)
