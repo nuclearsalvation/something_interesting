@@ -10,7 +10,9 @@ import io, csv
 import urllib, base64
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import ZeroSerializer, ZeroResponseSerializer
+from rest_framework import renderers
+from .serializers import ZeroSerializer, ZeroResponseSerializer, ZeroNameNumSerializer
+from rest_framework import status
 # Create your views here.
 
 
@@ -183,3 +185,12 @@ class ZeroResponseAPIView(APIView):
             srlz = LocalClass(fin,a,b,c,dx)
             serializer = ZeroResponseSerializer(srlz)
             return Response(serializer.data)
+    
+class ZeroNameNumAPIView(APIView):
+    def post(self, request, format=None):
+        serializer = ZeroNameNumSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
