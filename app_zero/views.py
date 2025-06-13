@@ -187,6 +187,12 @@ class ZeroResponseAPIView(APIView):
             return Response(serializer.data)
     
 class ZeroNameNumAPIView(APIView):
+    def get(self, request, format = None):
+        obj = ZeroNameNumModel.objects.all()
+        serializer = ZeroNameNumSerializer(obj, many = True)
+
+        return Response(serializer.data)
+
     def post(self, request, format=None):
         serializer = ZeroNameNumSerializer(data=request.data)
         if serializer.is_valid():
@@ -194,3 +200,19 @@ class ZeroNameNumAPIView(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+class ZeroLoadFromCSVViewToDB(TemplateView):
+    template_name='app_zero/show_name_num_set.html'
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        loading_list = []
+        with open('uploads/table.csv','r', encoding='utf-8') as loading_file:
+            csv_reader = csv.reader(loading_file)
+            next(csv_reader, None)
+            for row in csv_reader:
+                loading_list.append(row)
+        context['name_num_list'] = loading_list
+        for name_num in loading_list:
+            ZeroNameNumModel.objects.create(name = name_num[0], num=name_num[1])
+        return context
