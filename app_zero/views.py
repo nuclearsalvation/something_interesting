@@ -184,6 +184,13 @@ class ZeroResponseAPIView(APIView):
             dx = self.request.GET.get('dx')
             srlz = LocalClass(fin,a,b,c,dx)
             serializer = ZeroResponseSerializer(srlz)
+            fig = response_figure(fin=int(fin),a=float(a),b=float(b),c=float(c),dx=float(dx))
+            img = ZeroImageModel.objects.create()
+
+            filepath='uploads/test_img_{id}.png'
+            fig.savefig(filepath.format(id=img.id))
+            img.img=filepath.format(id=img.id)
+            img.save()
             return Response(serializer.data)
     
 class ZeroNameNumAPIView(APIView):
