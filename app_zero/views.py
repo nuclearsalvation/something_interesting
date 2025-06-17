@@ -242,3 +242,24 @@ class ZeroResponseAPIViewTwo(APIView):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ZeroResponseAPIViewMany(APIView):
+    def post(self, request, format=None):
+        serializer = ZeroResponseSerializer(data=request.data, many = True)
+        
+        if serializer.is_valid():
+            for dt in serializer.data:
+                a = dt['a']
+                b = dt['b']
+                c = dt['c']
+                dx = dt['dx']
+                fin = dt['fin']
+                fig = response_figure(fin=int(fin),a=float(a),b=float(b),c=float(c),dx=float(dx))
+                img = ZeroImageModel.objects.create()
+                filepath='uploads/test_img_{id}.png'
+                fig.savefig(filepath.format(id=img.id))
+                img.img=filepath.format(id=img.id)
+                img.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
