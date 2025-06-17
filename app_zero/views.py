@@ -223,3 +223,22 @@ class ZeroLoadFromCSVViewToDB(TemplateView):
         for name_num in loading_list:
             ZeroNameNumModel.objects.create(name = name_num[0], num=name_num[1])
         return context
+
+class ZeroResponseAPIViewTwo(APIView):
+    def post(self, request, format=None):
+        serializer = ZeroResponseSerializer(data=request.data)
+        if serializer.is_valid():
+            a = serializer.data['a']
+            b = serializer.data['b']
+            c = serializer.data['c']
+            dx = serializer.data['dx']
+            fin = serializer.data['fin']
+            fig = response_figure(fin=int(fin),a=float(a),b=float(b),c=float(c),dx=float(dx))
+            img = ZeroImageModel.objects.create()
+            filepath='uploads/test_img_{id}.png'
+            fig.savefig(filepath.format(id=img.id))
+            img.img=filepath.format(id=img.id)
+            img.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

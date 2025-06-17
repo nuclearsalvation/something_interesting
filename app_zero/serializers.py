@@ -10,6 +10,8 @@ class ZeroResponseSerializer(serializers.Serializer):
     c = serializers.FloatField()
     dx = serializers.FloatField()
     fin = serializers.IntegerField()
+    class Meta:
+        fields = ['a', 'b', 'c', 'dx', 'fin']
 
 
 class ZeroNameNumSerializer(serializers.ModelSerializer):
