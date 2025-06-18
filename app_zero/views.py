@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpRequest
+from django.http import HttpRequest, Http404
 from django.views.generic import CreateView, TemplateView
 from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel
 from .forms import ZeroSubmitForm
@@ -263,3 +263,20 @@ class ZeroResponseAPIViewMany(APIView):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ZeroNameNumAPIViewOne(APIView):
+    def get_object(self, pk):
+        try:
+            return ZeroNameNumModel.objects.get(pk=pk)
+        except ZeroNameNumModel.DoesNotExist:
+            raise Http404
+        
+    def get(self, request, pk, format=None):
+        obj = self.get_object(pk)
+        serializer = ZeroNameNumSerializer(obj)
+        return Response(serializer.data)
+    
+    def delete(self, request, pk, format=None):
+        obj = self.get_object(pk)
+        obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
