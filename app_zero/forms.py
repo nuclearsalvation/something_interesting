@@ -7,3 +7,6 @@ class ZeroSubmitForm:
     right = forms.DecimalField()
     step = forms.DecimalField()
     frequency = forms.DecimalField()
+
+class FileSubmitForm:
+    file = forms.FileField()

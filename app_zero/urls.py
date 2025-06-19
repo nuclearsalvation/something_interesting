@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ZeroSubmitView, ZeroShowView, ZeroFromBaseShowView, ZeroCreateView,  ZeroImageView, ZeroListStringView, ZeroAPIView, ZeroAPIViewOne, ZeroResponseView, ZeroNameNumCreateView, ZeroLoadFromCSVView, ZeroResponseSubmitView, ZeroResponseAPIView, ZeroNameNumAPIView, ZeroLoadFromCSVViewToDB, ZeroResponseAPIViewTwo, ZeroResponseAPIViewMany, ZeroNameNumAPIViewOne
+from .views import ZeroSubmitView, ZeroShowView, ZeroFromBaseShowView, ZeroCreateView,  ZeroImageView, ZeroListStringView, ZeroAPIView, ZeroAPIViewOne, ZeroResponseView, ZeroNameNumCreateView, ZeroLoadFromCSVView, ZeroResponseSubmitView, ZeroResponseAPIView, ZeroNameNumAPIView, ZeroLoadFromCSVViewToDB, ZeroResponseAPIViewTwo, ZeroResponseAPIViewMany, ZeroNameNumAPIViewOne, ZeroFileSubmitView
 
 app_name='app_zero'
 
@@ -21,7 +21,6 @@ urlpatterns=[
     path('name_num_all_db', ZeroLoadFromCSVViewToDB.as_view(template_name='app_zero/show_name_num_set.html'), name='name_num_list_db'),
     path('serialized_response_two', ZeroResponseAPIViewTwo.as_view()),
     path('serialized_response_many', ZeroResponseAPIViewMany.as_view()),
-    path('name_num_one/<pk>', ZeroNameNumAPIViewOne.as_view())
-
+    path('name_num_one/<pk>', ZeroNameNumAPIViewOne.as_view()),
 
 ]
