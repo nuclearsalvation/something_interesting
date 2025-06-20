@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpRequest, Http404, FileResponse
-from django.views.generic import CreateView, TemplateView
+from django.http import HttpRequest, Http404, FileResponse, HttpResponseRedirect
+from django.views.generic import CreateView, TemplateView, FormView
 from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel
-from .forms import ZeroSubmitForm
+from .forms import ZeroSubmitForm, FileSubmitForm
 from .figures import sin_figure, response_figure
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
@@ -19,6 +19,20 @@ from rest_framework import status
 class ZeroSubmitView(TemplateView):
     form_class = ZeroSubmitForm
     template_name = 'app_zero/input_zero'
+
+class ZeroSubmitFileView(TemplateView): #templateview
+    form_class = FileSubmitForm
+    template_name = 'app_zero/submit_file.html'
+    def post(self, request, *args, **kwargs):
+        file = self.request.FILES['file']
+        with open(f'uploads/{file.name}','wb+') as dstn:
+            for chunk in file.chunks():
+                dstn.write(chunk)
+
+
+        return HttpResponseRedirect('/zero/submit_file')
+        
+
 
 class ZeroShowView(TemplateView):
     template_name = 'app_zero/show_sin'
