@@ -3,7 +3,7 @@ from django.http import HttpRequest, Http404, FileResponse, HttpResponseRedirect
 from django.views.generic import CreateView, TemplateView, FormView
 from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel
 from .forms import ZeroSubmitForm, FileSubmitForm
-from .figures import sin_figure, response_figure
+from .figures import sin_figure, response_figure, sin_figure_damping
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import io, csv
@@ -11,7 +11,7 @@ import urllib, base64
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import renderers
-from .serializers import ZeroSerializer, ZeroResponseSerializer, ZeroNameNumSerializer
+from .serializers import ZeroSerializer, ZeroResponseSerializer, ZeroNameNumSerializer, ZeroDampingSerializer
 from rest_framework import status
 # Create your views here.
 
@@ -304,3 +304,24 @@ class ZeroNameNumAPIViewOne(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
+class ZeroDampingAPIViewMany(APIView):
+    def post(self, request, format=None):
+        serializer = ZeroDampingSerializer(data=request.data, many = True)
+        
+        if serializer.is_valid():
+            for dt in serializer.data:
+                a = dt['a']
+                b = dt['b']
+                c = dt['c']
+                mu = dt['mu']
+                dx = dt['dx']
+                fin = dt['fin']
+                fig = sin_figure_damping(fin=int(fin),a=float(a),b=float(b),c=float(c),dx=float(dx),mu=float(mu))
+                img = ZeroImageModel.objects.create()
+                filepath='uploads/test_img_{id}.png'
+                fig.savefig(filepath.format(id=img.id))
+                img.img=filepath.format(id=img.id)
+                img.save()
+
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
