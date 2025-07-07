@@ -20,7 +20,7 @@ class ZeroSubmitView(TemplateView):
     form_class = ZeroSubmitForm
     template_name = 'app_zero/input_zero'
 
-class ZeroSubmitFileView(TemplateView): #templateview
+class ZeroSubmitFileView(TemplateView): 
     form_class = FileSubmitForm
     template_name = 'app_zero/submit_file.html'
     def post(self, request, *args, **kwargs):
