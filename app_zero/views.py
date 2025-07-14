@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, Http404, FileResponse, HttpResponseRedirect
 from django.views.generic import CreateView, TemplateView, FormView
-from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel
+from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel, ZeroJSONModel
 from .forms import ZeroSubmitForm, FileSubmitForm
 from .figures import sin_figure, response_figure, sin_figure_damping
 from matplotlib.figure import Figure
@@ -325,3 +325,7 @@ class ZeroDampingAPIViewMany(APIView):
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ZeroJSONCreateView(CreateView):
+    model = ZeroJSONModel
+    fields = 'list',

@@ -18,3 +18,6 @@ class ZeroCSVModel(models.Model):
 class ZeroNameNumModel(models.Model):
     name = models.TextField()
     num = models.FloatField()
+
+class ZeroJSONModel(models.Model):
+    list = models.JSONField(default=dict,blank=True)
