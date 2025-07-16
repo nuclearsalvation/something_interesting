@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from .models import *
 
 class FunctionsFourierSerializer(serializers.Serializer):
     a0 = serializers.FloatField()
@@ -14,4 +15,7 @@ class FunctionsFourierSerializer(serializers.Serializer):
     name = serializers.CharField()
     description = serializers.CharField()
     class Meta:
-        fields = ['a0', 'a1', 'a2', 'a3', 'a4', 'b1', 'b2', 'b3', 'b4', 'l', 'description']
+        fields = ['a0', 'a1', 'a2', 'a3', 'a4', 'b1', 'b2', 'b3', 'b4', 'l', 'name', 'description']
+
+    def create(self, validated_data):
+        return FunctionFourierSeriesModel.objects.create(**validated_data)
