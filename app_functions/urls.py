@@ -6,5 +6,7 @@ app_name = 'app_functions'
 urlpatterns = [
     path('create_fourier', FourierSeriesCreateView.as_view(template_name='app_functions/tmplt.html'), name='create_fourier'),
     path('show_fourier/<pk>', FourierSeriesPlotView.as_view(template_name='app_functions/show_fig.html'), name='plot_fourier'),
-    path('api_fourier', FourierSeriesAPIView.as_view())
+    path('api_fourier', FourierSeriesAPIView.as_view()),
+    path('api_taylor', TaylorSeriesAPIView.as_view()),
+    path('show_taylor/<pk>', TaylorSeriesPlotView.as_view(template_name='app_functions/show_fig.html'), name='plot_taylor'),
 ]

@@ -19,3 +19,22 @@ class FunctionsFourierSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         return FunctionFourierSeriesModel.objects.create(**validated_data)
+    
+class FunctionsTaylorSerializer(serializers.Serializer):
+    c0 = serializers.FloatField()
+    c1 = serializers.FloatField()
+    c2 = serializers.FloatField()
+    c3 = serializers.FloatField()
+    c4 = serializers.FloatField()
+    c5 = serializers.FloatField()
+    c6 = serializers.FloatField()
+    c7 = serializers.FloatField()
+    c8 = serializers.FloatField()
+    x0 = serializers.FloatField()
+    name = serializers.CharField()
+    description = serializers.CharField()
+    class Meta:
+        fields = ['c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'x0', 'name', 'description']
+
+    def create(self, validated_data):
+        return FunctionsTaylorSeriesModel.objects.create(**validated_data)
