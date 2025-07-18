@@ -106,3 +106,8 @@ class TaylorSeriesPlotView(TemplateView):
             'source': uri
         }
         return render(request, template_name='app_functions/show_fig.html', context=context)
+    
+class TaylorSeriesCreateView(CreateView):
+    model = FunctionsTaylorSeriesModel
+    fields = 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'x0', 'name', 'description'
+    template_name = 'app_functions/tmplt.html'
