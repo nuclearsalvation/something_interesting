@@ -111,3 +111,30 @@ class TaylorSeriesCreateView(CreateView):
     model = FunctionsTaylorSeriesModel
     fields = 'c0', 'c1', 'c2', 'c3', 'c4', 'c5', 'c6', 'c7', 'c8', 'x0', 'name', 'description'
     template_name = 'app_functions/tmplt.html'
+
+class FourierSeriesDerivativePlotView(TemplateView):
+    def get(self, request: HttpRequest, pk: int):
+        obj = get_object_or_404(FunctionFourierSeriesModel, pk=pk)
+        def series(x):
+            result = 0
+            result = result - obj.a1*sin(x*pi/obj.l)*(pi/obj.l)
+            result = result - obj.a2*sin(x*pi*2/obj.l)*(pi*2/obj.l)
+            result = result - obj.a3*sin(x*pi*3/obj.l)*(pi*3/obj.l)
+            result = result - obj.a4*sin(x*pi*4/obj.l)*(pi*4/obj.l)
+            result = result + obj.b1*cos(x*pi/obj.l)*(pi/obj.l)
+            result = result + obj.b2*cos(x*pi*2/obj.l)*(pi*2/obj.l)
+            result = result + obj.b3*cos(x*pi*3/obj.l)*(pi*3/obj.l)
+            result = result + obj.b4*cos(x*pi*4/obj.l)*(pi*4/obj.l)
+            return result
+
+        fig, ax = plt.subplots()
+        ax.plot([(float(x*0.001)) for x in range(int(obj.l*1000))], [series(float(x*0.001)) for x in range(int(obj.l*1000))])
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png')
+        buf.seek(0)
+        string = base64.b64encode(buf.read())
+        uri =  urllib.parse.quote(string)
+        context = {
+            'source': uri
+        }
+        return render(request, template_name='app_functions/show_fig.html', context=context)
