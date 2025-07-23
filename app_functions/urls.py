@@ -11,4 +11,5 @@ urlpatterns = [
     path('api_taylor', TaylorSeriesAPIView.as_view()),
     path('show_taylor/<pk>', TaylorSeriesPlotView.as_view(template_name='app_functions/show_fig.html'), name='plot_taylor'),
     path('create_taylor', TaylorSeriesCreateView.as_view(template_name='app_functions/tmplt.html'), name='create_taylor'),
+    path('show_taylor/<pk>/derivative', TaylorSeriesDerivativePlotView.as_view(template_name='app_functions/show_fig.html'), name='plot_taylor_derivative'),
 ]

@@ -138,3 +138,30 @@ class FourierSeriesDerivativePlotView(TemplateView):
             'source': uri
         }
         return render(request, template_name='app_functions/show_fig.html', context=context)
+
+class TaylorSeriesDerivativePlotView(TemplateView):
+    def get(self, request: HttpRequest, pk: int):
+        obj = get_object_or_404(FunctionsTaylorSeriesModel, pk=pk)
+        def series(x):
+            result = 0
+            result = result + obj.c1
+            result = result + obj.c2*(x-obj.x0)
+            result = result + obj.c3*(((x-obj.x0)**2)/factorial(2))
+            result = result + obj.c4*(((x-obj.x0)**3)/factorial(3))
+            result = result + obj.c5*(((x-obj.x0)**4)/factorial(4))
+            result = result + obj.c6*(((x-obj.x0)**5)/factorial(5))
+            result = result + obj.c7*(((x-obj.x0)**6)/factorial(6))
+            result = result + obj.c8*(((x-obj.x0)**7)/factorial(7))
+            return result
+
+        fig, ax = plt.subplots()
+        ax.plot([(float(x*0.001)) for x in range(int(3140))], [series(float(x*0.001)) for x in range(int(3140))])
+        buf = io.BytesIO()
+        fig.savefig(buf, format='png')
+        buf.seek(0)
+        string = base64.b64encode(buf.read())
+        uri =  urllib.parse.quote(string)
+        context = {
+            'source': uri
+        }
+        return render(request, template_name='app_functions/show_fig.html', context=context)
