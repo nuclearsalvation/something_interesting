@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import ZeroSubmitView, ZeroShowView, ZeroFromBaseShowView, ZeroCreateView,  ZeroImageView, ZeroListStringView, ZeroAPIView, ZeroAPIViewOne, ZeroResponseView, ZeroNameNumCreateView, ZeroLoadFromCSVView, ZeroResponseSubmitView, ZeroResponseAPIView, ZeroNameNumAPIView, ZeroLoadFromCSVViewToDB, ZeroResponseAPIViewTwo, ZeroResponseAPIViewMany, ZeroNameNumAPIViewOne, ZeroSubmitFileView, ZeroDampingAPIViewMany, ZeroJSONCreateView
+from .views import ZeroSubmitView, ZeroShowView, ZeroFromBaseShowView, ZeroCreateView,  ZeroImageView, ZeroListStringView, ZeroAPIView, ZeroAPIViewOne, ZeroResponseView, ZeroNameNumCreateView, ZeroLoadFromCSVView, ZeroResponseSubmitView, ZeroResponseAPIView, ZeroNameNumAPIView, ZeroLoadFromCSVViewToDB, ZeroResponseAPIViewTwo, ZeroResponseAPIViewMany, ZeroNameNumAPIViewOne, ZeroSubmitFileView, ZeroDampingAPIViewMany, ZeroJSONCreateView, json_response_view
 
 app_name='app_zero'
 
@@ -24,6 +24,7 @@ urlpatterns=[
     path('name_num_one/<pk>', ZeroNameNumAPIViewOne.as_view()),
     path('submit_file', ZeroSubmitFileView.as_view(template_name='app_zero/submit_file.html'), name='submit_file'),
     path('serialized_damping_many', ZeroDampingAPIViewMany.as_view()),
-    path('create_json', ZeroJSONCreateView.as_view(template_name='app_zero/tmplt.html'), name='create_json')
+    path('create_json', ZeroJSONCreateView.as_view(template_name='app_zero/tmplt.html'), name='create_json'),
+    path('test_json', json_response_view)
 
 ]

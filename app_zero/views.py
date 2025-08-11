@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpRequest, Http404, FileResponse, HttpResponseRedirect
+from django.http import HttpRequest, Http404, FileResponse, HttpResponseRedirect, JsonResponse
 from django.views.generic import CreateView, TemplateView, FormView
 from .models import ZeroModel, ZeroImageModel, ZeroStringModel, ZeroNameNumModel,  ZeroCSVModel, ZeroJSONModel
 from .forms import ZeroSubmitForm, FileSubmitForm
@@ -329,3 +329,9 @@ class ZeroDampingAPIViewMany(APIView):
 class ZeroJSONCreateView(CreateView):
     model = ZeroJSONModel
     fields = 'list',
+
+def json_response_view(request):
+    data = {
+        'name': 'test'
+    }
+    return JsonResponse(data)
